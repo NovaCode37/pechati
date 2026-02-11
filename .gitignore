@@ -26,3 +26,4 @@ postgresql_*
 .vscode/
 *.sqlite3
 instance/
+.cursor/
