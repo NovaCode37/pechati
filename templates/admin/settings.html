@@ -1,0 +1,51 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Настройки{% endblock %}
+{% block page_title %}Настройки сайта{% endblock %}
+
+{% block admin_content %}
+<div class="max-w-2xl">
+    <div class="bg-white rounded-xl border border-gray-100 p-6">
+        <h3 class="font-bold text-gray-800 mb-6">Контактная информация и настройки</h3>
+
+        <form method="POST" class="space-y-5">
+            {{ form.hidden_tag() }}
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Название компании</label>
+                {{ form.company_name(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none", placeholder="Печати7") }}
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Город</label>
+                {{ form.city(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none", placeholder="Тюмень") }}
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Телефон</label>
+                {{ form.phone(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none", placeholder="+7 (902) 815-79-80") }}
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                {{ form.email(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none", placeholder="pechati5tyumen@ya.ru") }}
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Адрес</label>
+                {{ form.address(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none", placeholder="г. Тюмень, ул. Примерная, 1") }}
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Режим работы</label>
+                {{ form.work_hours(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none", placeholder="ПН-ПТ 09:00-17:00") }}
+            </div>
+
+            <div class="pt-2">
+                <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl font-semibold transition">
+                    <i class="fas fa-save mr-1"></i> Сохранить настройки
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

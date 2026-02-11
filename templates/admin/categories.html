@@ -1,0 +1,71 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Категории{% endblock %}
+{% block page_title %}Категории{% endblock %}
+
+{% block admin_content %}
+<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold text-gray-800">Управление категориями</h2>
+    <a href="{{ url_for('admin_category_add') }}" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition">
+        <i class="fas fa-plus"></i> Добавить категорию
+    </a>
+</div>
+
+<div class="bg-white rounded-xl border border-gray-100">
+    {% if categories %}
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="text-left text-xs text-gray-500 uppercase border-b border-gray-100">
+                    <th class="px-5 py-3">ID</th>
+                    <th class="px-5 py-3">Название</th>
+                    <th class="px-5 py-3">Slug</th>
+                    <th class="px-5 py-3">Порядок</th>
+                    <th class="px-5 py-3">Статус</th>
+                    <th class="px-5 py-3">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat in categories %}
+                <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+                    <td class="px-5 py-3 font-medium text-gray-800">{{ cat.id }}</td>
+                    <td class="px-5 py-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-{{ cat.icon or 'stamp' }} text-primary-400"></i>
+                            <span class="font-medium">{{ cat.name }}</span>
+                        </div>
+                    </td>
+                    <td class="px-5 py-3 text-sm text-gray-500">{{ cat.slug }}</td>
+                    <td class="px-5 py-3 text-sm text-gray-500">{{ cat.sort_order }}</td>
+                    <td class="px-5 py-3">
+                        {% if cat.is_active %}
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">Активна</span>
+                        {% else %}
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">Скрыта</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-5 py-3">
+                        <div class="flex items-center gap-2">
+                            <a href="{{ url_for('admin_category_edit', id=cat.id) }}" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-blue-50 text-blue-600 transition" title="Редактировать">
+                                <i class="fas fa-pen text-xs"></i>
+                            </a>
+                            <form method="POST" action="{{ url_for('admin_category_delete', id=cat.id) }}" onsubmit="return confirm('Удалить категорию?')">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-red-50 text-red-600 transition" title="Удалить">
+                                    <i class="fas fa-trash text-xs"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="p-8 text-center text-gray-500">
+        <i class="fas fa-folder-open text-3xl text-gray-300 mb-2"></i>
+        <p>Категорий пока нет</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

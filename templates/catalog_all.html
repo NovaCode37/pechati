@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Каталог{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="bg-gray-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{{ url_for('index') }}" class="hover:text-primary-600 transition">Главная</a>
+            <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+            <span class="text-gray-800 font-medium">Каталог</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-12">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="mb-10">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Каталог печатей и штампов</h1>
+            <p class="text-gray-500 max-w-2xl">Выберите нужный тип продукции и оформите заказ</p>
+        </div>
+
+        {% if products %}
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for product in products %}
+            <div class="card-hover bg-white rounded-2xl border border-gray-100 overflow-hidden">
+                <div class="bg-gradient-to-br from-primary-50 to-blue-50 p-8 flex items-center justify-center min-h-[160px] overflow-hidden">
+                    {% if product.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="{{ product.name }}" class="max-h-28 w-auto object-contain">
+                    {% else %}
+                    <i class="fas fa-{{ product.category.icon or 'stamp' }} text-5xl text-primary-300"></i>
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <p class="text-xs text-primary-600 font-medium mb-1">{% if product.category.slug == 'ooo' %}Печать организации{% elif product.category.slug == 'medics' %}Печать врача{% else %}{{ product.category.name }}{% endif %}</p>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">{{ product.name }}</h3>
+                    <p class="text-gray-500 text-sm mb-4 leading-relaxed line-clamp-2">{{ product.description }}</p>
+                    <a href="{{ url_for('order_product', product_id=product.id) }}" class="block text-center bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-semibold transition">
+                        <i class="fas fa-paper-plane"></i> Заказать
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-gray-100">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">По категориям</h2>
+            <div class="flex flex-wrap gap-3">
+                {% for cat in categories %}
+                <a href="{{ url_for('catalog', slug=cat.slug) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 hover:bg-primary-50 text-gray-700 hover:text-primary-700 transition">
+                    <i class="fas fa-{{ cat.icon or 'stamp' }} text-primary-500"></i>
+                    {% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-16">
+            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-box-open text-3xl text-gray-400"></i>
+            </div>
+            <p class="text-gray-500 text-lg">В каталоге пока нет товаров</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

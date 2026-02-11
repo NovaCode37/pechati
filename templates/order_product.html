@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% block title %}Заказ: {{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{{ url_for('index') }}" class="hover:text-primary-600 transition">Главная</a>
+            <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+            <a href="{{ url_for('catalog', slug=product.category.slug) }}" class="hover:text-primary-600 transition">{{ product.category.name }}</a>
+            <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+            <span class="text-gray-800 font-medium">{{ product.name }}</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-12">
+    <div class="max-w-3xl mx-auto px-4">
+        <!-- Step indicator -->
+        <div class="flex items-center justify-center gap-2 mb-10">
+            <div class="flex items-center gap-1">
+                <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold {% if step >= 1 %}bg-primary-600 text-white{% else %}bg-gray-200 text-gray-500{% endif %}">1</span>
+                <span class="text-sm text-gray-500 hidden sm:inline">Параметры</span>
+            </div>
+            {% if not skip_layout_osnastka %}
+            <div class="w-12 h-0.5 bg-gray-200"></div>
+            <div class="flex items-center gap-1">
+                <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold {% if step >= 2 %}bg-primary-600 text-white{% else %}bg-gray-200 text-gray-500{% endif %}">2</span>
+                <span class="text-sm text-gray-500 hidden sm:inline">Макет</span>
+            </div>
+            <div class="w-12 h-0.5 bg-gray-200"></div>
+            {% endif %}
+            <div class="flex items-center gap-1">
+                <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold {% if step >= 3 %}bg-primary-600 text-white{% else %}bg-gray-200 text-gray-500{% endif %}">{{ 2 if skip_layout_osnastka else 3 }}</span>
+                <span class="text-sm text-gray-500 hidden sm:inline">{% if skip_layout_osnastka %}Контакты{% else %}Оснастка и контакты{% endif %}</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-lg p-6 md:p-10">
+            {% if step == 1 %}
+            <h2 class="text-xl font-bold text-gray-800 mb-6">Шаг 1: Параметры {{ product.name|lower }}</h2>
+            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                {% if product.category.slug == 'ooo' %}
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">ООО (наименование)</label>
+                    <input type="text" name="param_ooo" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="ООО «Компания»"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">ОГРН</label>
+                    <input type="text" name="param_ogrn" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder=""></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">ИНН</label>
+                    <input type="text" name="param_inn" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder=""></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Город</label>
+                    <input type="text" name="param_city" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="Тюмень"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Размер печати (мм)</label>
+                    <input type="text" name="param_size" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="40"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Количество (шт)</label>
+                    <input type="number" name="param_qty" value="1" min="1" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none"></div>
+                </div>
+                {% elif product.category.slug == 'ip' %}
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">ФИО</label>
+                    <input type="text" name="param_fio" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="Иванов Иван Иванович"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">ОГРНИП</label>
+                    <input type="text" name="param_ogrnip" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder=""></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">ИНН</label>
+                    <input type="text" name="param_inn" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder=""></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Город</label>
+                    <input type="text" name="param_city" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="Тюмень"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Размер печати (мм)</label>
+                    <input type="text" name="param_size" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="40"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Количество (шт)</label>
+                    <input type="number" name="param_qty" value="1" min="1" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none"></div>
+                </div>
+                {% elif product.category.slug == 'medics' %}
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">ФИО</label>
+                    <input type="text" name="param_fio" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="Иванов Иван Иванович"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Специальность</label>
+                    <input type="text" name="param_spec" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="Терапевт"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Размер печати (мм)</label>
+                    <input type="text" name="param_size" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="40"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Количество (шт)</label>
+                    <input type="number" name="param_qty" value="1" min="1" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none"></div>
+                </div>
+                {% elif product.category.slug == 'faksimile' %}
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Количество (шт)</label>
+                    <input type="number" name="param_qty" value="1" min="1" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none"></div>
+                </div>
+                {% elif product.category.slug == 'stamps' %}
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="sm:col-span-2"><label class="block text-sm font-semibold text-gray-700 mb-2">Текст штампа</label>
+                    <textarea name="param_text" rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none resize-none" placeholder="Введите текст для штампа..."></textarea></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Кол-во строк</label>
+                    <input type="number" name="param_lines" min="1" value="1" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Количество (шт)</label>
+                    <input type="number" name="param_qty" value="1" min="1" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none"></div>
+                </div>
+                {% elif product.category.slug == 'ottisk' %}
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Размер печати (мм)</label>
+                    <input type="text" name="param_size" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="40"></div>
+                    <div><label class="block text-sm font-semibold text-gray-700 mb-2">Количество (шт)</label>
+                    <input type="number" name="param_qty" value="1" min="1" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none"></div>
+                </div>
+                {% endif %}
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Загрузить документ (оттиск, подпись)</label>
+                    <input type="file" name="file_step1" accept="image/*,.pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100">
+                    <p class="text-xs text-gray-400 mt-1">JPG, PNG, PDF. Для печати по оттиску — обязательно загрузите чёткий оттиск.</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Комментарий</label>
+                    <textarea name="message" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none resize-none" placeholder="Дополнительные пожелания..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-4 rounded-xl font-bold transition flex items-center justify-center gap-2">
+                    {% if skip_layout_osnastka %}Далее: контакты{% elif layouts %}Далее: выбор макета{% else %}Далее: выбор оснастки{% endif %} <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            {% elif step == 2 and not skip_layout_osnastka %}
+            <h2 class="text-xl font-bold text-gray-800 mb-6">Шаг 2: Выберите макет</h2>
+            {% if layouts %}
+            <form method="POST" class="space-y-6">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="grid sm:grid-cols-2 gap-4">
+                    {% for layout in layouts %}
+                    <label class="cursor-pointer block">
+                        <input type="radio" name="layout_id" value="{{ layout.id }}" {% if layouts|length == 1 or (selected_layout and selected_layout.id == layout.id) %}checked{% endif %} class="sr-only peer">
+                        <div class="border-2 rounded-xl p-4 transition peer-checked:border-primary-500 peer-checked:bg-primary-50 hover:border-primary-300">
+                            <div class="aspect-square bg-gray-100 rounded-lg flex items-center justify-center mb-3 overflow-hidden min-h-[120px]">
+                                {% if layout.image %}
+                                <img src="{{ url_for('static', filename='uploads/' + layout.image) }}" alt="{{ layout.name }}" class="w-full h-full object-contain p-2" loading="lazy">
+                                {% else %}
+                                <i class="fas fa-image text-4xl text-gray-300"></i>
+                                {% endif %}
+                            </div>
+                            <p class="font-semibold text-gray-800 text-center">{{ layout.name }}</p>
+                            <p class="text-primary-600 font-bold text-center mt-1">{{ (layout.price|default(750))|int }} руб.</p>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-4 rounded-xl font-bold transition flex items-center justify-center gap-2">
+                    Далее: выбор оснастки <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+            {% else %}
+            <p class="text-gray-500 mb-6">Макеты не добавлены. Переходим к выбору оснастки.</p>
+            <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-4 rounded-xl font-bold transition">Далее</button>
+            </form>
+            {% endif %}
+
+            {% elif step == 3 %}
+            <h2 class="text-xl font-bold text-gray-800 mb-6">{% if skip_layout_osnastka %}Шаг 2: Контакты{% else %}Шаг 3: Оснастка и контакты{% endif %}</h2>
+            <form method="POST" enctype="multipart/form-data" class="space-y-6" id="orderProductForm">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="layout_id" value="{{ layout_id or (layouts[0].id if layouts else '') }}">
+                {% if skip_layout_osnastka and price_options %}<input type="hidden" name="price_option_id" value="{{ price_options[0].id }}">{% endif %}
+
+                {% if price_options and not skip_layout_osnastka %}
+                {% set layout_price = (selected_layout.price|default(750)) if selected_layout else 750 %}
+                <input type="hidden" id="layoutPrice" value="{{ layout_price|int }}">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Выберите оснастку</label>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        {% for po in price_options %}
+                        <label class="cursor-pointer block">
+                            <input type="radio" name="price_option_id" value="{{ po.id }}" required {% if loop.first %}checked{% endif %} class="sr-only peer osnastka-radio" data-price="{{ po.price_normal }}">
+                            <div class="border-2 rounded-xl p-4 transition peer-checked:border-primary-500 peer-checked:bg-primary-50 hover:border-primary-300">
+                                    <div class="aspect-square bg-gray-100 rounded-lg flex items-center justify-center mb-2 overflow-hidden min-h-[120px]">
+                                        {% if po.image %}
+                                        <img src="{{ url_for('static', filename='uploads/' + po.image) }}" alt="{{ po.osnastka_type }}" class="w-full h-full object-contain p-2" loading="lazy">
+                                        {% else %}
+                                        <i class="fas fa-stamp text-4xl text-gray-300"></i>
+                                        {% endif %}
+                                    </div>
+                                <p class="font-semibold text-gray-800">{{ po.osnastka_type }}</p>
+                                {% if po.description %}<p class="text-sm text-gray-600 mt-1">{{ po.description }}</p>{% endif %}
+                                <p class="text-primary-600 font-bold mt-1">{{ po.price_normal|int }} руб.</p>
+                            </div>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-100 pt-6">
+                    <p class="text-lg font-bold text-gray-800 mb-4">Итого: <span id="totalPrice">{{ (layout_price|default(0)|int) + (price_options[0].price_normal|int if price_options else 0) }}</span> руб.</p>
+                </div>
+                {% elif price_options and skip_layout_osnastka %}
+                <input type="hidden" id="layoutPrice" value="0">
+                <input type="hidden" id="basePrice" value="{{ price_options[0].price_normal|int }}">
+                <div class="border-t border-gray-100 pt-6">
+                    <p class="text-lg font-bold text-gray-800 mb-4">Итого: <span id="totalPrice">{{ price_options[0].price_normal|int }}</span> руб.</p>
+                </div>
+                {% endif %}
+
+                <div class="border-t border-gray-100 pt-6 space-y-4">
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" name="needs_delivery" id="needs_delivery" value="on"
+                            class="mt-1 w-4 h-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 delivery-checkbox">
+                        <label for="needs_delivery" class="text-sm font-medium text-gray-700 cursor-pointer">
+                            Нужна доставка (+500 руб.)
+                        </label>
+                    </div>
+                    <div id="deliveryFields" class="pl-7 space-y-4 hidden">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Дата и время доставки</label>
+                            <input type="text" name="delivery_datetime" id="delivery_datetime" placeholder="например: 10.02.2026, 14:00"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Адрес доставки</label>
+                            <input type="text" name="delivery_address" id="delivery_address" placeholder="ул. Примерная, д. 1, кв. 1"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Ваше имя <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="Иван Иванов">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Телефон <span class="text-red-500">*</span></label>
+                        <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="+7 (___) ___-__-__">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                        <input type="email" name="email" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none" placeholder="mail@example.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Комментарий</label>
+                        <textarea name="message" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none resize-none" placeholder="Дополнительные пожелания"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Загрузить оттиск (фото/скан)</label>
+                        <input type="file" name="file" accept="image/*,.pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100">
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" name="consent_pd" id="consent_pd" required
+                            class="mt-1 w-4 h-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                        <label for="consent_pd" class="text-sm text-gray-600">
+                            Даю согласие на обработку персональных данных <span class="text-red-500">*</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-4 rounded-xl font-bold text-lg transition flex items-center justify-center gap-2">
+                    <i class="fas fa-paper-plane"></i> Отправить заказ
+                </button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% if step == 3 %}
+<script>
+(function() {
+    const layoutPriceEl = document.getElementById('layoutPrice');
+    const basePriceEl = document.getElementById('basePrice');
+    const layoutPrice = parseInt(layoutPriceEl?.value || 0, 10) || 0;
+    const basePrice = basePriceEl ? parseInt(basePriceEl.value, 10) || 0 : 0;
+    const DELIVERY_FEE = 500;
+
+    function updateTotal() {
+        const osnastkaRadio = document.querySelector('.osnastka-radio:checked');
+        const osnastkaPrice = osnastkaRadio ? parseFloat(osnastkaRadio.dataset.price) || 0 : basePrice;
+        const deliveryChecked = document.getElementById('needs_delivery')?.checked || false;
+        const deliveryFee = deliveryChecked ? DELIVERY_FEE : 0;
+        const total = Math.round(layoutPrice + osnastkaPrice + deliveryFee);
+        const el = document.getElementById('totalPrice');
+        if (el) el.textContent = total;
+    }
+
+    document.querySelectorAll('.osnastka-radio').forEach(r => {
+        r.addEventListener('change', updateTotal);
+    });
+
+    const deliveryCheckbox = document.getElementById('needs_delivery');
+    const deliveryFields = document.getElementById('deliveryFields');
+    if (deliveryCheckbox && deliveryFields) {
+        deliveryCheckbox.addEventListener('change', function() {
+            deliveryFields.classList.toggle('hidden', !this.checked);
+            updateTotal();
+        });
+    }
+
+    updateTotal();
+})();
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}О компании{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{{ url_for('index') }}" class="hover:text-primary-600 transition">Главная</a>
+            <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+            <span class="text-gray-800 font-medium">О компании</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-12">
+    <div class="max-w-4xl mx-auto px-4">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-10">О компании {{ get_setting('company_name', 'Печати7') }}</h1>
+
+        <!-- Main info -->
+        <div class="prose prose-lg max-w-none mb-12">
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Изготовление печатей и штампов</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Компания <strong>{{ get_setting('company_name', 'Печати7') }}</strong> специализируется на
+                    изготовлении печатей и штампов в {{ get_setting('city', 'Тюмени') }}. Мы работаем с 2010 года
+                    и за это время изготовили тысячи печатей для организаций и индивидуальных предпринимателей.
+                </p>
+                <p class="text-gray-600 leading-relaxed">
+                    Не волнуйтесь, утеряв или сломав печать — мы поможем вам изготовить новую — надёжную
+                    и красивую, с качественной оснасткой из фирменных материалов отличного качества.
+                </p>
+            </div>
+        </div>
+
+        <!-- Features grid -->
+        <div class="grid sm:grid-cols-2 gap-6 mb-12">
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
+                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-medal text-xl text-green-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Высокое качество</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Используем только фирменные оснастки (Colop, Trodat, GRM) и полимерные материалы высшего качества.</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
+                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-ruble-sign text-xl text-purple-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Доступные цены</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Лучшее соотношение цена/качество. Скидка от цены конкурентов. Прозрачное ценообразование.</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 card-hover">
+                <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-truck text-xl text-amber-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 mb-2">Доставка</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Бесплатная доставка по городу от 5000 рублей. Курьерская доставка до двери — 500 рублей.</p>
+            </div>
+        </div>
+
+        <!-- Types of osnastka -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Виды оснасток</h2>
+            <div class="space-y-4">
+                <div class="bg-white rounded-2xl border border-gray-100 p-6">
+                    <h3 class="font-bold text-gray-800 mb-2">
+                        <i class="fas fa-hand text-primary-500 mr-2"></i>Ручная (пластиковая) оснастка
+                    </h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Самый экономичный вариант. Печать вставляется в пластиковый корпус, штемпельная подушечка идёт отдельно.
+                        Подходит для небольшого количества оттисков в день.
+                    </p>
+                </div>
+                <div class="bg-white rounded-2xl border border-gray-100 p-6">
+                    <h3 class="font-bold text-gray-800 mb-2">
+                        <i class="fas fa-gear text-primary-500 mr-2"></i>Автоматическая оснастка
+                    </h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Наиболее популярный вариант. Штемпельная подушечка встроена в корпус.
+                        Одним нажатием вы получаете ровный и чёткий оттиск. Идеально для активного использования.
+                    </p>
+                </div>
+                <div class="bg-white rounded-2xl border border-gray-100 p-6">
+                    <h3 class="font-bold text-gray-800 mb-2">
+                        <i class="fas fa-briefcase text-primary-500 mr-2"></i>Карманная оснастка
+                    </h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Компактная оснастка, которая помещается в карман. Идеальна для врачей, курьеров и всех,
+                        кому нужна печать всегда под рукой. Крышка защищает от случайных оттисков.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="hero-gradient rounded-2xl p-8 text-center text-white">
+            <h3 class="text-2xl font-bold mb-3">Готовы заказать?</h3>
+            <p class="text-blue-100 mb-6">Оставьте заявку и получите свою печать уже сегодня!</p>
+            <a href="{{ url_for('order') }}" class="inline-flex items-center gap-2 bg-white text-primary-700 px-8 py-3 rounded-xl font-bold hover:bg-blue-50 transition">
+                <i class="fas fa-paper-plane"></i> Оформить заказ
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

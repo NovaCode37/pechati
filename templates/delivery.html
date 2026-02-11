@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Доставка{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{{ url_for('index') }}" class="hover:text-primary-600 transition">Главная</a>
+            <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+            <span class="text-gray-800 font-medium">Доставка</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-12">
+    <div class="max-w-4xl mx-auto px-4">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-10">Доставка</h1>
+
+        <div class="space-y-6">
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 card-hover">
+                <div class="flex items-start gap-4">
+                    <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center shrink-0">
+                        <i class="fas fa-person-walking text-2xl text-green-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Самовывоз</h3>
+                        <p class="text-gray-600 leading-relaxed mb-2">
+                            Вы можете забрать готовый заказ в нашем офисе по адресу:
+                            <strong>{{ get_setting('address', 'г. Тюмень, ул. Широтная, д. 113, к. 1, с. 1 (офис 7)') }}</strong>
+                        </p>
+                        <p class="text-gray-500 text-sm">Режим работы: {{ get_setting('work_hours', 'ПН-ПТ 09:00-17:00') }}</p>
+                        <span class="inline-block mt-3 text-green-700 bg-green-50 px-3 py-1 rounded-full text-sm font-semibold">Бесплатно</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 card-hover">
+                <div class="flex items-start gap-4">
+                    <div class="w-14 h-14 bg-primary-100 rounded-2xl flex items-center justify-center shrink-0">
+                        <i class="fas fa-truck text-2xl text-primary-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Курьерская доставка по городу</h3>
+                        <p class="text-gray-600 leading-relaxed mb-2">
+                            Доставим готовый заказ курьером до двери в удобное для вас время по указанному адресу
+                            в пределах {{ get_setting('city', 'Тюмени') }}.
+                            Бесплатная доставка по городу от 5000 рублей.
+                        </p>
+                        <p class="text-gray-500 text-sm mb-2">Срок доставки: в день готовности заказа или на следующий рабочий день.</p>
+                        <span class="inline-block mt-3 text-primary-700 bg-primary-50 px-3 py-1 rounded-full text-sm font-semibold">500 рублей (бесплатно от 5000 ₽)</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-10 bg-primary-50 rounded-2xl p-8 text-center border border-primary-100">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Есть вопросы по доставке?</h3>
+            <p class="text-gray-600 mb-5">Позвоните нам или оставьте заявку, и мы всё расскажем</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="tel:{{ get_setting('phone', '+79028157980') }}" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl font-semibold transition">
+                    <i class="fas fa-phone"></i> {{ get_setting('phone', '+7 (902) 815-79-80') }}
+                </a>
+                <a href="{{ url_for('catalog_all') }}" class="inline-flex items-center gap-2 border-2 border-primary-300 text-primary-700 px-6 py-3 rounded-xl font-semibold hover:bg-white transition">
+                    <i class="fas fa-th-large"></i> Каталог
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

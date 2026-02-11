@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="bg-gray-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+            <a href="{{ url_for('index') }}" class="hover:text-primary-600 transition">Главная</a>
+            <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+            <span class="text-gray-800 font-medium">{% if category.slug == 'ooo' %}Печать организации{% elif category.slug == 'medics' %}Печать врача{% else %}{{ category.name }}{% endif %}</span>
+        </nav>
+    </div>
+</div>
+
+<section class="py-12">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="mb-10">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">{% if category.slug == 'ooo' %}Печать организации{% elif category.slug == 'medics' %}Печать врача{% else %}{{ category.name }}{% endif %}</h1>
+            {% if category.description %}
+            <p class="text-gray-500 max-w-2xl">{{ category.description }}</p>
+            {% endif %}
+        </div>
+
+        {% if products %}
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for product in products %}
+            <div class="card-hover bg-white rounded-2xl border border-gray-100 overflow-hidden">
+                <div class="bg-gradient-to-br from-primary-50 to-blue-50 p-8 flex items-center justify-center min-h-[180px] overflow-hidden">
+                    {% if product.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="{{ product.name }}" class="max-h-32 w-auto object-contain">
+                    {% else %}
+                    <i class="fas fa-{{ category.icon or 'stamp' }} text-5xl text-primary-300"></i>
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
+                    <p class="text-gray-500 text-sm mb-4 leading-relaxed">{{ product.description }}</p>
+
+                    <a href="{{ url_for('order_product', product_id=product.id) }}" class="block text-center bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-semibold transition">
+                        <i class="fas fa-paper-plane"></i> Заказать
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-16">
+            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-box-open text-3xl text-gray-400"></i>
+            </div>
+            <p class="text-gray-500 text-lg">В этой категории пока нет товаров</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

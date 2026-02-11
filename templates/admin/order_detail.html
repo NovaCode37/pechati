@@ -1,0 +1,127 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Заказ #{{ order.id }}{% endblock %}
+{% block page_title %}Заказ #{{ order.id }}{% endblock %}
+
+{% block admin_content %}
+<div class="max-w-3xl">
+    <div class="mb-6">
+        <a href="{{ url_for('admin_orders') }}" class="text-sm text-gray-500 hover:text-primary-600 transition">
+            <i class="fas fa-arrow-left mr-1"></i> Назад к заказам
+        </a>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-100 p-6 mb-6">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-gray-800">Заказ #{{ order.id }}</h2>
+            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium
+                {% if order.status == 'new' %}bg-blue-100 text-blue-700
+                {% elif order.status == 'in_progress' %}bg-amber-100 text-amber-700
+                {% elif order.status == 'done' %}bg-green-100 text-green-700
+                {% else %}bg-red-100 text-red-700{% endif %}">
+                {{ order.status_label }}
+            </span>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-xs text-gray-500 mb-1">Имя</p>
+                <p class="font-semibold text-gray-800">{{ order.name }}</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-xs text-gray-500 mb-1">Телефон</p>
+                <p class="font-semibold text-gray-800">
+                    <a href="tel:{{ order.phone }}" class="text-primary-600 hover:text-primary-700">{{ order.phone }}</a>
+                </p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-xs text-gray-500 mb-1">Email</p>
+                <p class="font-semibold text-gray-800">{{ order.email or '—' }}</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-xs text-gray-500 mb-1">Дата заказа</p>
+                <p class="font-semibold text-gray-800">{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-xs text-gray-500 mb-1">Товар</p>
+                <p class="font-semibold text-gray-800">{{ order.product.name if order.product else (order.order_type or '—') }}</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-xs text-gray-500 mb-1">Макет</p>
+                <p class="font-semibold text-gray-800">{{ order.layout.name if order.layout else '—' }}</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-xs text-gray-500 mb-1">Оснастка</p>
+                <p class="font-semibold text-gray-800">{{ order.price_option.osnastka_type if order.price_option else (order.osnastka or '—') }}</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-xs text-gray-500 mb-1">Итого</p>
+                <p class="font-semibold text-primary-700">{% if order.total_price is not none %}{{ order.total_price|int }} руб.{% else %}—{% endif %}</p>
+            </div>
+        </div>
+
+        {% if order_params %}
+        <div class="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-100">
+            <p class="text-xs text-blue-700 font-semibold mb-2">Параметры печати</p>
+            <dl class="grid sm:grid-cols-2 gap-2 text-sm text-gray-800">
+                {% for key, value in order_params.items() %}
+                {% if value %}
+                <dt class="font-medium text-gray-600">{{ param_labels.get(key, key) }}:</dt>
+                <dd>{{ value }}</dd>
+                {% endif %}
+                {% endfor %}
+            </dl>
+        </div>
+        {% endif %}
+
+        {% if order.needs_delivery %}
+        <div class="mt-4 p-4 bg-amber-50 rounded-xl border border-amber-100">
+            <p class="text-xs text-amber-700 font-semibold mb-2">Доставка (+500 руб.)</p>
+            <p class="text-sm text-gray-800"><strong>Дата и время:</strong> {{ order.delivery_datetime or '—' }}</p>
+            <p class="text-sm text-gray-800 mt-1"><strong>Адрес:</strong> {{ order.delivery_address or '—' }}</p>
+        </div>
+        {% endif %}
+
+        {% if order.message %}
+        <div class="mt-4 p-4 bg-gray-50 rounded-xl">
+            <p class="text-xs text-gray-500 mb-1">Комментарий</p>
+            <p class="text-gray-800">{{ order.message }}</p>
+        </div>
+        {% endif %}
+
+        {% if order.file_path or order.file_path_step3 %}
+        <div class="mt-4 p-4 bg-gray-50 rounded-xl">
+            <p class="text-xs text-gray-500 mb-2">Прикреплённые файлы</p>
+            <div class="space-y-1">
+                {% if order.file_path %}
+                <a href="{{ url_for('static', filename='uploads/' + order.file_path) }}" target="_blank" class="block text-primary-600 hover:text-primary-700 font-medium text-sm">
+                    <i class="fas fa-paperclip"></i> Шаг 1: {{ order.file_path }}
+                </a>
+                {% endif %}
+                {% if order.file_path_step3 %}
+                <a href="{{ url_for('static', filename='uploads/' + order.file_path_step3) }}" target="_blank" class="block text-primary-600 hover:text-primary-700 font-medium text-sm">
+                    <i class="fas fa-paperclip"></i> Шаг 3: {{ order.file_path_step3 }}
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Change status -->
+    <div class="bg-white rounded-xl border border-gray-100 p-6">
+        <h3 class="font-bold text-gray-800 mb-4">Изменить статус</h3>
+        <form method="POST" action="{{ url_for('admin_order_status', id=order.id) }}" class="flex flex-wrap items-center gap-3">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <select name="status" class="px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none bg-white text-sm">
+                <option value="new" {% if order.status == 'new' %}selected{% endif %}>Новый</option>
+                <option value="in_progress" {% if order.status == 'in_progress' %}selected{% endif %}>В работе</option>
+                <option value="done" {% if order.status == 'done' %}selected{% endif %}>Готов</option>
+                <option value="cancelled" {% if order.status == 'cancelled' %}selected{% endif %}>Отменён</option>
+            </select>
+            <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition">
+                <i class="fas fa-save mr-1"></i> Обновить
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

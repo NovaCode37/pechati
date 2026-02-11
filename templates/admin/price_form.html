@@ -1,0 +1,60 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block admin_content %}
+<div class="max-w-2xl">
+    <div class="mb-6">
+        <a href="{{ url_for('admin_product_edit', id=product.id) }}" class="text-sm text-gray-500 hover:text-primary-600 transition">
+            <i class="fas fa-arrow-left mr-1"></i> Назад к товару "{{ product.name }}"
+        </a>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-100 p-6">
+        <form method="POST" enctype="multipart/form-data" class="space-y-5">
+            {{ form.hidden_tag() }}
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Тип оснастки</label>
+                {{ form.osnastka_type(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none", placeholder="Пластиковая (ручная)") }}
+                {% if form.osnastka_type.errors %}<p class="text-red-500 text-sm mt-1">{{ form.osnastka_type.errors[0] }}</p>{% endif %}
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Описание оснастки</label>
+                {{ form.description(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none resize-none", rows="3", placeholder="Описание для клиента...") }}
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Цена, руб.</label>
+                    {{ form.price_normal(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none", type="number", step="1") }}
+                    {% if form.price_normal.errors %}<p class="text-red-500 text-sm mt-1">{{ form.price_normal.errors[0] }}</p>{% endif %}
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Порядок</label>
+                    {{ form.sort_order(class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition outline-none", type="number") }}
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Картинка оснастки</label>
+                {% if price_option is defined and price_option and price_option.image %}
+                <div class="mb-2">
+                    <img src="{{ url_for('static', filename='uploads/' + price_option.image) }}" alt="" class="h-24 rounded-lg border border-gray-200">
+                    <p class="text-xs text-gray-500 mt-1">Текущее изображение</p>
+                </div>
+                {% endif %}
+                <input type="file" name="image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary-50 file:text-primary-700">
+                <p class="text-xs text-gray-400 mt-1">JPG, PNG, GIF. Оставьте пустым, чтобы не менять.</p>
+            </div>
+
+            <div class="pt-2">
+                <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl font-semibold transition">
+                    <i class="fas fa-save mr-1"></i> Сохранить
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
