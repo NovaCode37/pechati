@@ -135,11 +135,11 @@ def send_order_email(order):
     try:
         context = ssl.create_default_context()
         if config['MAIL_USE_SSL']:
-            with smtplib.SMTP_SSL(server_addr, port, context=context) as server:
+            with smtplib.SMTP_SSL(server_addr, port, context=context, timeout=15) as server:
                 server.login(sender, password)
                 server.sendmail(sender, recipient, msg.as_string())
         else:
-            with smtplib.SMTP(server_addr, port) as server:
+            with smtplib.SMTP(server_addr, port, timeout=15) as server:
                 server.starttls(context=context)
                 server.login(sender, password)
                 server.sendmail(sender, recipient, msg.as_string())
