@@ -55,38 +55,37 @@ def send_order_telegram(order):
     total = f'{int(order.total_price)} руб.' if order.total_price else '—'
 
     lines = [
-        f'🆕 *Новый заказ \\#{order.id}*',
+        f'🆕 <b>Новый заказ #{order.id}</b>',
         '',
-        f'👤 *Имя:* {_esc(order.name)}',
-        f'📞 *Телефон:* {_esc(order.phone)}',
+        f'👤 <b>Имя:</b> {_esc(order.name)}',
+        f'📞 <b>Телефон:</b> {_esc(order.phone)}',
     ]
     if order.email:
-        lines.append(f'📧 *Email:* {_esc(order.email)}')
+        lines.append(f'📧 <b>Email:</b> {_esc(order.email)}')
     lines += [
-        f'📦 *Товар:* {_esc(product_name)}',
-        f'🎨 *Макет:* {_esc(layout_name)}',
-        f'🔧 *Оснастка:* {_esc(osnastka)}',
-        f'💰 *Итого:* {_esc(total)}',
+        f'📦 <b>Товар:</b> {_esc(product_name)}',
+        f'🎨 <b>Макет:</b> {_esc(layout_name)}',
+        f'🔧 <b>Оснастка:</b> {_esc(osnastka)}',
+        f'💰 <b>Итого:</b> {_esc(total)}',
     ]
     if order.message:
-        lines.append(f'💬 *Сообщение:* {_esc(order.message)}')
+        lines.append(f'💬 <b>Сообщение:</b> {_esc(order.message)}')
 
     if getattr(order, 'needs_delivery', False):
-        lines.append(f'🚚 *Доставка:* Да \\(\\+500 руб\\.\\)')
+        lines.append(f'🚚 <b>Доставка:</b> Да (+500 руб.)')
         if order.delivery_datetime:
-            lines.append(f'📅 *Дата доставки:* {_esc(str(order.delivery_datetime))}')
+            lines.append(f'📅 <b>Дата доставки:</b> {_esc(str(order.delivery_datetime))}')
         if order.delivery_address:
-            lines.append(f'📍 *Адрес:* {_esc(order.delivery_address)}')
+            lines.append(f'📍 <b>Адрес:</b> {_esc(order.delivery_address)}')
 
     if order.params_json:
         try:
             params = json.loads(order.params_json)
             if params:
-                translated = [f'{_esc(_translate_key(k))}: {_esc(v)}' for k, v in params.items() if v]
+                translated = [f'  {_esc(_translate_key(k))}: {_esc(v)}' for k, v in params.items() if v]
                 if translated:
-                    lines.append(f'⚙️ *Параметры:*')
-                    for item in translated:
-                        lines.append(f'    {item}')
+                    lines.append(f'⚙️ <b>Параметры:</b>')
+                    lines.extend(translated)
         except (json.JSONDecodeError, TypeError):
             pass
 
@@ -98,7 +97,7 @@ def send_order_telegram(order):
         resp = requests.post(f'{api_base}/sendMessage', json={
             'chat_id': chat_id,
             'text': text,
-            'parse_mode': 'MarkdownV2',
+            'parse_mode': 'HTML',
         }, timeout=10)
         if resp.status_code == 200:
             current_app.logger.info(f'Telegram notification sent for order #{order.id}')
@@ -133,10 +132,11 @@ def send_order_telegram(order):
 
 
 def _esc(s):
-    """Escape special characters for MarkdownV2."""
+    """Escape special characters for HTML parse mode."""
     if not s:
         return '—'
     s = str(s)
-    for ch in r'\_*[]()~`>#+-=|{}.!':
-        s = s.replace(ch, f'\\{ch}')
+    s = s.replace('&', '&amp;')
+    s = s.replace('<', '&lt;')
+    s = s.replace('>', '&gt;')
     return s
