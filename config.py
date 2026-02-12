@@ -24,10 +24,12 @@ class Config:
     MAX_FIELD_ADDRESS = 1000
     MAX_PARAMS_JSON_LENGTH = 10000
 
-    # --- PostgreSQL ---
+    # --- Database (PostgreSQL or MySQL) ---
     _db_url = os.getenv('DATABASE_URL', 'postgresql://pechati7:pechati7@localhost:5432/pechati7')
     if _db_url.startswith('postgres://'):
         _db_url = 'postgresql://' + _db_url[len('postgres://'):]
+    if _db_url.startswith('mysql://'):
+        _db_url = 'mysql+pymysql://' + _db_url[len('mysql://'):]
     SQLALCHEMY_DATABASE_URI = _db_url
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
