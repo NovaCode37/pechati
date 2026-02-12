@@ -57,10 +57,9 @@ def seed():
              ]},
             {'category': 'medics', 'name': 'Печать врача', 'description': 'Треугольная или круглая печать для медиков',
              'sort_order': 1, 'prices': [
-                 {'osnastka_type': 'Клише (без оснастки)', 'description': 'Простое клише без оснастки.', 'price_normal': 0, 'sort_order': 0},
-                 {'osnastka_type': 'Пластиковая (ручная)', 'description': 'Ручная пластиковая оснастка.', 'price_normal': 1550, 'sort_order': 1},
-                 {'osnastka_type': 'Автоматическая оснастка Colop Printer R40', 'description': 'Оснастка австрийского производства. Отличное качество оттиска, бесшумный и плавный механизм.', 'price_normal': 1750, 'sort_order': 2},
-                 {'osnastka_type': 'Карманная', 'description': 'Компактная карманная оснастка.', 'price_normal': 1650, 'sort_order': 3},
+                 {'osnastka_type': 'Клише (без оснастки)', 'description': 'Простое клише без оснастки. Отлично подходит для замены клише в существующей печати.', 'price_normal': 0, 'sort_order': 0},
+                 {'osnastka_type': 'Автоматическая оснастка Trodat printy 4630', 'description': 'Оснастка Trodat — это компромисс между доступной ценой, стилем и надёжностью эксплуатации.', 'price_normal': 800, 'sort_order': 1},
+                 {'osnastka_type': 'Карманная оснастка Colop Mouse R40', 'description': 'Качественная оснастка известного австрийского производителя. Высокое качество оттиска, удобные в использовании боковые кнопки.', 'price_normal': 800, 'sort_order': 2},
              ]},
             {'category': 'faksimile', 'name': 'Факсимиле', 'description': 'Точное воспроизведение подписи',
              'sort_order': 1, 'prices': [{'osnastka_type': 'Стандарт', 'description': '', 'price_normal': 1200, 'sort_order': 1}], 'no_layouts': True},
