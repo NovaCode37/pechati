@@ -63,9 +63,12 @@
                 <a href="{{ url_for('index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">
                     <i class="fas fa-external-link-alt w-5 text-center"></i> Открыть сайт
                 </a>
-                <a href="{{ url_for('admin_logout') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition">
-                    <i class="fas fa-sign-out-alt w-5 text-center"></i> Выйти
-                </a>
+                <form method="post" action="{{ url_for('admin_logout') }}" class="m-0">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition">
+                        <i class="fas fa-sign-out-alt w-5 text-center"></i> Выйти
+                    </button>
+                </form>
             </nav>
         </aside>
 
@@ -81,9 +84,12 @@
                     <span class="text-sm text-gray-500 hidden sm:inline">
                         <i class="fas fa-user-circle"></i> {{ current_user.username }}
                     </span>
-                    <a href="{{ url_for('admin_logout') }}" class="text-sm text-red-600 hover:text-red-700">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </a>
+                    <form method="post" action="{{ url_for('admin_logout') }}" class="inline m-0">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="text-sm text-red-600 hover:text-red-700">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
                 </div>
             </header>
 
@@ -104,7 +110,10 @@
                     <a href="{{ url_for('admin_settings') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="fas fa-cog w-5 text-center"></i> Настройки</a>
                     <div class="border-t border-gray-100 my-3"></div>
                     <a href="{{ url_for('index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50"><i class="fas fa-external-link-alt w-5 text-center"></i> Сайт</a>
-                    <a href="{{ url_for('admin_logout') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50"><i class="fas fa-sign-out-alt w-5 text-center"></i> Выйти</a>
+                    <form method="post" action="{{ url_for('admin_logout') }}" class="m-0">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50"><i class="fas fa-sign-out-alt w-5 text-center"></i> Выйти</button>
+                    </form>
                 </div>
             </div>
 

@@ -24,15 +24,20 @@ class Config:
     MAX_FIELD_ADDRESS = 1000
     MAX_PARAMS_JSON_LENGTH = 10000
 
-    _db_url = os.getenv('DATABASE_URL')
-    if _db_url:
-        if _db_url.startswith('postgres://'):
-            _db_url = 'postgresql://' + _db_url[10:]
-        SQLALCHEMY_DATABASE_URI = _db_url
-    else:
-        SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'pechati5.db')
+    # --- PostgreSQL ---
+    _db_url = os.getenv('DATABASE_URL', 'postgresql://pechati7:pechati7@localhost:5432/pechati7')
+    if _db_url.startswith('postgres://'):
+        _db_url = 'postgresql://' + _db_url[len('postgres://'):]
+    SQLALCHEMY_DATABASE_URI = _db_url
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_size': int(os.getenv('DB_POOL_SIZE', 5)),
+        'max_overflow': int(os.getenv('DB_MAX_OVERFLOW', 10)),
+        'pool_timeout': 30,
+        'pool_recycle': 1800,
+        'pool_pre_ping': True,
+    }
 
     MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.yandex.ru')
     MAIL_PORT = int(os.getenv('MAIL_PORT', 465))

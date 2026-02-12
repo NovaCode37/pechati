@@ -48,7 +48,7 @@
                     <i class="fas fa-stamp text-2xl text-primary-600"></i>
                 </div>
                 <h3 class="font-bold text-gray-800 mb-1">Каталог</h3>
-                <p class="text-sm text-gray-500">Печать организации, ИП, печать врача, штампы</p>
+                <p class="text-sm text-gray-500">Печать организации, печать ИП, печать врача, штампы</p>
             </div>
             <div class="text-center p-4">
                 <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
@@ -88,7 +88,7 @@
                 <div class="w-16 h-16 bg-primary-50 group-hover:bg-primary-100 rounded-2xl flex items-center justify-center mb-4 transition">
                     <i class="fas fa-{{ cat.icon or 'stamp' }} text-2xl text-primary-600"></i>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2 group-hover:text-primary-700 transition">{% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}</h3>
+                <h3 class="font-bold text-gray-800 mb-2 group-hover:text-primary-700 transition">{% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'ip' %}Печать ИП{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}</h3>
                 <p class="text-sm text-gray-500 leading-relaxed mb-4">{{ cat.description }}</p>
                 <span class="mt-auto inline-flex items-center gap-1 text-primary-600 text-sm font-semibold group-hover:gap-2 transition-all">
                     Подробнее <i class="fas fa-arrow-right text-xs"></i>
@@ -109,7 +109,7 @@
                     <span class="text-primary-600">печатей и штампов</span>
                 </h2>
                 <p class="text-gray-600 leading-relaxed mb-4">
-                    Печать организации, ИП, печать врача, факсимиле, штампы и восстановление по оттиску.
+                    Печать организации, печать ИП, печать врача, факсимиле, штампы и восстановление по оттиску.
                     Выберите нужный тип в каталоге и оформите заказ — мы свяжемся с вами для уточнения деталей.
                 </p>
                 <p class="text-gray-600 leading-relaxed mb-6">
@@ -133,7 +133,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-800 mb-1">Любые виды печатей</h4>
-                            <p class="text-sm text-gray-500">Круглые, треугольные, прямоугольные — печать организации, ИП, печать врача</p>
+                            <p class="text-sm text-gray-500">Круглые, треугольные, прямоугольные — печать организации, печать ИП, печать врача</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">

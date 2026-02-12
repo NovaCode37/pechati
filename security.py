@@ -1,7 +1,13 @@
-
 import time
+import uuid
+import os
 from functools import wraps
 from flask import request, abort
+
+
+RATE_WINDOW = 60
+
+_rate_storage = {}
 
 
 def allowed_file(filename, allowed_extensions):
@@ -12,8 +18,6 @@ def allowed_file(filename, allowed_extensions):
 
 
 def safe_save_upload(file_storage, upload_folder, allowed_extensions):
-    import uuid
-    import os
     if not file_storage or not getattr(file_storage, 'filename', None) or not file_storage.filename.strip():
         return None
     if not allowed_file(file_storage.filename, allowed_extensions):
@@ -41,26 +45,25 @@ def apply_security_headers(response):
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
     response.headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
     response.headers['Content-Security-Policy'] = (
         "default-src 'self'; "
-        "script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; "
+        "script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://api-maps.yandex.ru; "
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
         "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; "
         "img-src 'self' data: https:; "
         "connect-src 'self'; "
+        "frame-src 'self' https://yandex.ru https://api-maps.yandex.ru; "
         "frame-ancestors 'self';"
     )
     return response
 
 
-_rate_storage = {}
-RATE_WINDOW = 60
-RATE_MAX_LOGIN = 5
-RATE_MAX_ORDER = 10
-
-
 def _rate_key(prefix):
-    return f"{prefix}:{request.remote_addr}"
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    if ip and ',' in ip:
+        ip = ip.split(',')[0].strip()
+    return f"{prefix}:{ip}"
 
 
 def check_rate_limit(prefix, max_requests):

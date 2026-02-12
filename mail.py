@@ -2,7 +2,7 @@ import os
 import smtplib
 import ssl
 import json
-import html
+import html as _html_mod
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
@@ -11,7 +11,7 @@ from flask import current_app
 
 
 def _h(s):
-    return html.escape(str(s)) if s else '—'
+    return _html_mod.escape(str(s)) if s else '—'
 
 
 def send_order_email(order):

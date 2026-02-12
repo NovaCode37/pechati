@@ -188,15 +188,19 @@
                     </div>
                 </div>
 
+                {% if product.category.slug not in ['faksimile', 'ottisk'] %}
                 <div class="border-t border-gray-100 pt-6">
                     <p class="text-lg font-bold text-gray-800 mb-4">Итого: <span id="totalPrice">{{ (layout_price|default(0)|int) + (price_options[0].price_normal|int if price_options else 0) }}</span> руб.</p>
                 </div>
+                {% endif %}
                 {% elif price_options and skip_layout_osnastka %}
                 <input type="hidden" id="layoutPrice" value="0">
                 <input type="hidden" id="basePrice" value="{{ price_options[0].price_normal|int }}">
+                {% if product.category.slug not in ['faksimile', 'ottisk'] %}
                 <div class="border-t border-gray-100 pt-6">
                     <p class="text-lg font-bold text-gray-800 mb-4">Итого: <span id="totalPrice">{{ price_options[0].price_normal|int }}</span> руб.</p>
                 </div>
+                {% endif %}
                 {% endif %}
 
                 <div class="border-t border-gray-100 pt-6 space-y-4">

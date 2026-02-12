@@ -99,7 +99,7 @@
                             {% for cat in nav_categories %}
                             <a href="{{ url_for('catalog', slug=cat.slug) }}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition">
                                 <i class="fas fa-{{ cat.icon or 'stamp' }} w-5 text-primary-400"></i>
-                                {% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}
+                                {% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'ip' %}Печать ИП{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}
                             </a>
                             {% endfor %}
                         </div>
@@ -126,7 +126,7 @@
                 <a href="{{ url_for('catalog_all') }}" class="block px-3 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 font-medium">Каталог</a>
                 {% for cat in nav_categories %}
                 <a href="{{ url_for('catalog', slug=cat.slug) }}" class="block px-3 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 text-sm pl-7">
-                    <i class="fas fa-{{ cat.icon or 'stamp' }} w-5 text-primary-400"></i> {% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}
+                    <i class="fas fa-{{ cat.icon or 'stamp' }} w-5 text-primary-400"></i> {% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'ip' %}Печать ИП{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}
                 </a>
                 {% endfor %}
                 <a href="{{ url_for('about') }}" class="block px-3 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 font-medium">О компании</a>
@@ -182,7 +182,7 @@
                         <span class="text-xl font-extrabold text-white">Печати<span class="text-accent-400">7</span></span>
                     </div>
                     <p class="text-sm text-gray-400 leading-relaxed">
-                        Изготовление печатей и штампов. Печать организации, ИП, печать врача, факсимиле, штампы.
+                        Изготовление печатей и штампов. Печать организации, печать ИП, печать врача, факсимиле, штампы.
                     </p>
                 </div>
 
@@ -204,7 +204,7 @@
                     <h3 class="text-white font-semibold mb-4">Категории</h3>
                     <ul class="space-y-2 text-sm">
                         {% for cat in nav_categories[:6] %}
-                        <li><a href="{{ url_for('catalog', slug=cat.slug) }}" class="hover:text-white transition">{% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}</a></li>
+                        <li><a href="{{ url_for('catalog', slug=cat.slug) }}" class="hover:text-white transition">{% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'ip' %}Печать ИП{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

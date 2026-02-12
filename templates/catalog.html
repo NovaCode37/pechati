@@ -8,7 +8,7 @@
         <nav class="flex items-center gap-2 text-sm text-gray-500">
             <a href="{{ url_for('index') }}" class="hover:text-primary-600 transition">Главная</a>
             <i class="fas fa-chevron-right text-xs text-gray-300"></i>
-            <span class="text-gray-800 font-medium">{% if category.slug == 'ooo' %}Печать организации{% elif category.slug == 'medics' %}Печать врача{% else %}{{ category.name }}{% endif %}</span>
+            <span class="text-gray-800 font-medium">{% if category.slug == 'ooo' %}Печать организации{% elif category.slug == 'ip' %}Печать ИП{% elif category.slug == 'medics' %}Печать врача{% else %}{{ category.name }}{% endif %}</span>
         </nav>
     </div>
 </div>
@@ -16,7 +16,7 @@
 <section class="py-12">
     <div class="max-w-7xl mx-auto px-4">
         <div class="mb-10">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">{% if category.slug == 'ooo' %}Печать организации{% elif category.slug == 'medics' %}Печать врача{% else %}{{ category.name }}{% endif %}</h1>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">{% if category.slug == 'ooo' %}Печать организации{% elif category.slug == 'ip' %}Печать ИП{% elif category.slug == 'medics' %}Печать врача{% else %}{{ category.name }}{% endif %}</h1>
             {% if category.description %}
             <p class="text-gray-500 max-w-2xl">{{ category.description }}</p>
             {% endif %}

@@ -1,5 +1,9 @@
+import os
 from app import app, db
 from models import Category, Product, PriceOption, Layout, SiteSetting, Admin
+
+ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin')
+ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'change-me')
 
 
 def seed():
@@ -104,17 +108,10 @@ def seed():
             db.session.add(SiteSetting(key=k, value=v))
 
         if not Admin.query.first():
-            admin = Admin(username='p3chati1337adm')
-            admin.set_password('Kara123aa/')
+            admin = Admin(username=ADMIN_USERNAME)
+            admin.set_password(ADMIN_PASSWORD)
             db.session.add(admin)
-
         db.session.commit()
-        print('Database seeded successfully!')
-        print(f'  Categories: {Category.query.count()}')
-        print(f'  Products: {Product.query.count()}')
-        print(f'  Price options: {PriceOption.query.count()}')
-        print(f'  Layouts: {Layout.query.count()}')
-        print(f'  Admin user: p3chati1337adm / Kara123aa/')
 
 
 if __name__ == '__main__':

@@ -32,7 +32,7 @@
                     {% endif %}
                 </div>
                 <div class="p-6">
-                    <p class="text-xs text-primary-600 font-medium mb-1">{% if product.category.slug == 'ooo' %}Печать организации{% elif product.category.slug == 'medics' %}Печать врача{% else %}{{ product.category.name }}{% endif %}</p>
+                    <p class="text-xs text-primary-600 font-medium mb-1">{% if product.category.slug == 'ooo' %}Печать организации{% elif product.category.slug == 'ip' %}Печать ИП{% elif product.category.slug == 'medics' %}Печать врача{% else %}{{ product.category.name }}{% endif %}</p>
                     <h3 class="text-lg font-bold text-gray-800 mb-2">{{ product.name }}</h3>
                     <p class="text-gray-500 text-sm mb-4 leading-relaxed line-clamp-2">{{ product.description }}</p>
                     <a href="{{ url_for('order_product', product_id=product.id) }}" class="block text-center bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-semibold transition">
@@ -49,7 +49,7 @@
                 {% for cat in categories %}
                 <a href="{{ url_for('catalog', slug=cat.slug) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 hover:bg-primary-50 text-gray-700 hover:text-primary-700 transition">
                     <i class="fas fa-{{ cat.icon or 'stamp' }} text-primary-500"></i>
-                    {% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}
+                    {% if cat.slug == 'ooo' %}Печать организации{% elif cat.slug == 'ip' %}Печать ИП{% elif cat.slug == 'medics' %}Печать врача{% else %}{{ cat.name }}{% endif %}
                 </a>
                 {% endfor %}
             </div>
