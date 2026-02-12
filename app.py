@@ -10,6 +10,7 @@ from models import db, Admin, Category, Product, PriceOption, Layout, Order, Sit
 from forms import (OrderForm, LoginForm, CategoryForm, ProductForm,
                    PriceOptionForm, LayoutForm, SettingsForm)
 from mail import send_order_email
+from telegram import send_order_telegram
 from security import (
     apply_security_headers,
     safe_save_upload,
@@ -108,6 +109,11 @@ def order():
             send_order_email(new_order)
         except Exception as e:
             app.logger.error(f'Failed to send email for order #{new_order.id}: {e}')
+
+        try:
+            send_order_telegram(new_order)
+        except Exception as e:
+            app.logger.error(f'Failed to send Telegram for order #{new_order.id}: {e}')
 
         flash('Ваш заказ успешно отправлен! Мы свяжемся с вами в ближайшее время.', 'success')
         return redirect(url_for('order_success'))
@@ -228,6 +234,11 @@ def order_product(product_id):
                 send_order_email(new_order)
             except Exception as e:
                 app.logger.error(f'Failed to send email for order #{new_order.id}: {e}')
+
+            try:
+                send_order_telegram(new_order)
+            except Exception as e:
+                app.logger.error(f'Failed to send Telegram for order #{new_order.id}: {e}')
 
             flash('Ваш заказ успешно отправлен! Мы свяжемся с вами в ближайшее время.', 'success')
             return redirect(url_for('order_success'))
