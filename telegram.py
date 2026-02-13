@@ -136,7 +136,6 @@ def send_order_telegram(order):
 
 
 def _esc(s):
-    """Escape special characters for HTML parse mode."""
     if not s:
         return '—'
     s = str(s)
