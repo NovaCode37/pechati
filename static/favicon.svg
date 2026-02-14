@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="50" fill="#4a90c4"/>
-  <path d="M30 25h28v10H40v30h-10V25z" fill="white"/>
-  <text x="58" y="78" font-family="Arial,sans-serif" font-weight="bold" font-size="42" fill="white">7</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+  <circle cx="50" cy="50" r="48" fill="#4a90c4"/>
+  <path d="M25 20h30v12H40v32H25V20z" fill="white"/>
+  <text x="60" y="75" font-family="Arial,sans-serif" font-weight="bold" font-size="36" fill="white" text-anchor="middle">7</text>
 </svg>
