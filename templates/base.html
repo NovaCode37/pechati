@@ -68,8 +68,7 @@
             <div class="flex items-center justify-between h-16 md:h-20">
                 <!-- Logo -->
                 <a href="{{ url_for('index') }}" class="flex items-center gap-3 shrink-0">
-                    {% set logo_file = get_setting('logo_path', 'logo.svg') %}
-                    <img src="{{ url_for('static', filename=logo_file if not logo_file.startswith('uploads/') else logo_file) }}" alt="Печати7" class="w-10 h-10 md:w-12 md:h-12 rounded-xl object-contain">
+                    <img src="{{ url_for('static', filename='logo.svg') }}" alt="Печати7" class="w-10 h-10 md:w-12 md:h-12 rounded-xl object-contain">
                     <div>
                         <span class="text-xl md:text-2xl font-extrabold text-primary-700">Печати<span class="text-accent-400">7</span></span>
                         <p class="text-xs text-gray-400 hidden md:block -mt-1">изготовление печатей</p>
@@ -192,8 +191,7 @@
                 <!-- About -->
                 <div class="md:col-span-1">
                     <div class="flex items-center gap-3 mb-4">
-                        {% set logo_file = get_setting('logo_path', 'logo.svg') %}
-                        <img src="{{ url_for('static', filename=logo_file if not logo_file.startswith('uploads/') else logo_file) }}" alt="Печати7" class="w-10 h-10 rounded-xl object-contain">
+                        <img src="{{ url_for('static', filename='logo.svg') }}" alt="Печати7" class="w-10 h-10 rounded-xl object-contain">
                         <span class="text-xl font-extrabold text-white">Печати<span class="text-accent-400">7</span></span>
                     </div>
                     <p class="text-sm text-gray-400 leading-relaxed">
