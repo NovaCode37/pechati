@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="45" fill="#4a90c4"/>
-  <path d="M22 18h32v14H42v34H22V18z" fill="white"/>
-  <text x="65" y="75" font-family="Arial,sans-serif" font-weight="bold" font-size="40" fill="white">7</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="50" fill="#4a90c4"/>
+  <path d="M25 25h35v15H45v35H25V25z" fill="white"/>
+  <text x="75" y="85" font-family="Arial,sans-serif" font-weight="bold" font-size="45" fill="white">7</text>
 </svg>
