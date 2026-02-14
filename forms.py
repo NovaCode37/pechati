@@ -78,3 +78,4 @@ class SettingsForm(FlaskForm):
     work_hours = StringField('Режим работы')
     company_name = StringField('Название компании')
     city = StringField('Город')
+    logo = FileField('Логотип сайта', validators=[Optional(), FileAllowed(['svg', 'png', 'jpg', 'jpeg'], 'Только изображения')])

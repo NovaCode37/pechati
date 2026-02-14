@@ -658,10 +658,21 @@ def admin_settings():
         SiteSetting.set('work_hours', form.work_hours.data)
         SiteSetting.set('company_name', form.company_name.data)
         SiteSetting.set('city', form.city.data)
+        
+        if form.logo.data:
+            logo_path = safe_save_upload(
+                form.logo.data,
+                app.config['UPLOAD_FOLDER'],
+                {'svg', 'png', 'jpg', 'jpeg'}
+            )
+            if logo_path:
+                SiteSetting.set('logo_path', logo_path)
+        
         flash('Настройки сохранены', 'success')
         return redirect(url_for('admin_settings'))
 
-    return render_template('admin/settings.html', form=form)
+    current_logo = SiteSetting.get('logo_path', 'logo.svg')
+    return render_template('admin/settings.html', form=form, current_logo=current_logo)
 
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
