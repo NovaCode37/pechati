@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Печати7{% endblock %} — Изготовление печатей и штампов</title>
     <meta name="description" content="{% block description %}Срочное изготовление печатей и штампов. Новые печати, восстановление по оттиску, факсимиле.{% endblock %}">
+    
+    <!-- Yandex and Open Graph -->
+    <meta property="og:title" content="{% block og_title %}Печати7 — Изготовление печатей и штампов{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Срочное изготовление печатей и штампов в Тюмени. Новые печати, восстановление по оттиску, факсимиле.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url if request else url_for('index', _external=True) }}">
+    <meta property="og:image" content="{{ url_for('static', filename='favicon.svg', _external=True) }}">
+    <meta property="og:site_name" content="Печати7">
+    <meta property="og:locale" content="ru_RU">
+    
+    <!-- Yandex verification -->
+    <meta name="yandex-verification" content="your-yandex-verification-code">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% block twitter_title %}Печати7 — Изготовление печатей и штампов{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Срочное изготовление печатей и штампов в Тюмени.{% endblock %}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
