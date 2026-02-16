@@ -20,8 +20,7 @@
                     <span class="text-accent-200">в Тюмени</span>
                 </h1>
                 <p class="text-lg text-blue-100 mb-8 max-w-lg leading-relaxed">
-                    Лучшее соотношение цена/качество. Бесплатная доставка по городу от 5000 рублей.
-                    Без лишних документов. Скидка от цены конкурентов.
+                    Лучшее соотношение цена/качество. Галерея готовых макетов на сайте. Заказ онлайн без посещения офиса. Изготовление в день обращения. Бесплатная доставка от 5000 руб.
                 </p>
             </div>
             <div class="flex justify-center order-first md:order-none">
@@ -48,28 +47,28 @@
                     <i class="fas fa-stamp text-2xl text-primary-600"></i>
                 </div>
                 <h3 class="font-bold text-gray-800 mb-1">Каталог</h3>
-                <p class="text-sm text-gray-500">Печать организации, печать ИП, печать врача, штампы</p>
+                <p class="text-sm text-gray-500">Печать организации, печать ИП, печать врача, печать по оттиску, штампы, факсимиле</p>
             </div>
             <div class="text-center p-4">
                 <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
                     <i class="fas fa-medal text-2xl text-green-600"></i>
                 </div>
                 <h3 class="font-bold text-gray-800 mb-1">Качество</h3>
-                <p class="text-sm text-gray-500">Фирменные материалы</p>
-            </div>
-            <div class="text-center p-4">
-                <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
-                    <i class="fas fa-truck text-2xl text-purple-600"></i>
-                </div>
-                <h3 class="font-bold text-gray-800 mb-1">Доставка</h3>
-                <p class="text-sm text-gray-500">Привезём к вам</p>
+                <p class="text-sm text-gray-500">Оснастка и материалы от известных и надежных брендов</p>
             </div>
             <div class="text-center p-4">
                 <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
-                    <i class="fas fa-ruble-sign text-2xl text-amber-600"></i>
+                    <i class="fas fa-clock text-2xl text-amber-600"></i>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-1">Онлайн-заказ</h3>
-                <p class="text-sm text-gray-500">Расчёт цены при оформлении</p>
+                <h3 class="font-bold text-gray-800 mb-1">Сроки изготовления</h3>
+                <p class="text-sm text-gray-500">В день обращения</p>
+            </div>
+            <div class="text-center p-4">
+                <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-laptop text-2xl text-purple-600"></i>
+                </div>
+                <h3 class="font-bold text-gray-800 mb-1">Онлайн заказ</h3>
+                <p class="text-sm text-gray-500">Выбор макета и расчет стоимости при оформлении заказа</p>
             </div>
         </div>
     </div>
@@ -79,8 +78,8 @@
 <section class="py-16">
     <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Виды печатей и штампов</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto">Выберите нужный тип продукции и оформите заказ онлайн</p>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">Каталог печатей и штампов</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">Выберите нужный вид услуги и оформите заказ онлайн</p>
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 stagger-children">
             {% for cat in categories %}
@@ -109,12 +108,8 @@
                     <span class="text-primary-600">печатей и штампов</span>
                 </h2>
                 <p class="text-gray-600 leading-relaxed mb-4">
-                    Печать организации, печать ИП, печать врача, факсимиле, штампы и восстановление по оттиску.
-                    Выберите нужный тип в каталоге и оформите заказ — мы свяжемся с вами для уточнения деталей.
-                </p>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    Не волнуйтесь, утеряв или сломав печать — мы поможем изготовить новую — надёжную
-                    и красивую, с качественной оснасткой из фирменных материалов.
+                    с 2016 года. Мы изготавливаем любые виды печатей для организаций, индивидуальных предпринимателей, врачей.
+                    Для вновь созданных организаций и ИП мы изготовим новую печать. В случае утери/износа печати - мы восстановим вашу печать. В случае реорганизации/смены реквизитов - мы внесем изменения в вашу действующую печать и изготовим новую.
                 </p>
                 <div class="flex flex-wrap gap-4">
                     <a href="{{ url_for('catalog_all') }}" class="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-700 transition">
@@ -133,7 +128,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-800 mb-1">Любые виды печатей</h4>
-                            <p class="text-sm text-gray-500">Круглые, треугольные, прямоугольные — печать организации, печать ИП, печать врача</p>
+                            <p class="text-sm text-gray-500">Печать организации, печать ИП, печать врача, печать по оттиску.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
@@ -141,8 +136,8 @@
                             <i class="fas fa-shield-halved text-blue-600"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-800 mb-1">Защита от подделки</h4>
-                            <p class="text-sm text-gray-500">Микротекст, гильоширные элементы, UV-метки по запросу</p>
+                            <h4 class="font-bold text-gray-800 mb-1">Высокое качество</h4>
+                            <p class="text-sm text-gray-500">Оснастка для печатей и штампов, а также материалы для изготовления клише от известных и надежных брендов</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
@@ -150,8 +145,8 @@
                             <i class="fas fa-clock-rotate-left text-amber-600"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-800 mb-1">Восстановление по оттиску</h4>
-                            <p class="text-sm text-gray-500">Воссоздадим утерянную печать по образцу оттиска</p>
+                            <h4 class="font-bold text-gray-800 mb-1">Удобные способы заказа</h4>
+                            <p class="text-sm text-gray-500">Онлайн через сайт, по электронной почте, в мессенджерах, в офисе или по телефону</p>
                         </div>
                     </div>
                 </div>
@@ -174,7 +169,7 @@
                     <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
                 </button>
                 <div class="faq-answer px-6 pb-4 text-gray-600 text-sm leading-relaxed">
-                    Изготовление печати по оттиску — это когда Вам требуется изготовить дубликат какой-либо печати. Оттиск — изображение печати на бумаге. Изготовить печать по этому изображению — и есть изготовить печать по оттиску.
+                    Изготовление печати по оттиску  - восстановление утраченной печати или создание копии печати по имеющемуся оттиску.
                 </div>
             </div>
             <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
@@ -183,16 +178,8 @@
                     <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
                 </button>
                 <div class="faq-answer px-6 pb-4 text-gray-600 text-sm leading-relaxed">
-                    Заказ можно оплатить по безналичному расчету на банковский счет нашей организации, наличными деньгами, переводом на банковские карты Сбербанк или Тинькофф.
-                </div>
-            </div>
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
-                <button class="faq-toggle w-full text-left px-6 py-4 flex items-center justify-between font-semibold text-gray-800 hover:text-primary-700 transition">
-                    <span>Что такое оснастки автоматические, простые, карманные?</span>
-                    <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
-                </button>
-                <div class="faq-answer px-6 pb-4 text-gray-600 text-sm leading-relaxed">
-                    Оснастка — это основа, то, к чему приклеивается клише печати. Подробнее можете прочитать на странице «О компании».
+                    Юридические лица и индивидуальные предприниматели могут оплатить заказ по безналичному расчету на банковский счет нашей организации.
+                    Физические лица могут оплатить заказ по qr-коду.
                 </div>
             </div>
             <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
@@ -201,34 +188,34 @@
                     <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
                 </button>
                 <div class="faq-answer px-6 pb-4 text-gray-600 text-sm leading-relaxed">
-                    Клише печати — так называемая резинка, рельеф печати. Обычно не толще 3-4мм.
+                    Клише для печати – резинка с рельефной поверхностью – зеркальным отражением оттиска, которое крепится к оснастке.
                 </div>
             </div>
             <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
                 <button class="faq-toggle w-full text-left px-6 py-4 flex items-center justify-between font-semibold text-gray-800 hover:text-primary-700 transition">
-                    <span>Почему новая печать дешевле печати по оттиску?</span>
+                    <span>Почему печать по оттиску дороже новой печати?</span>
                     <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
                 </button>
                 <div class="faq-answer px-6 pb-4 text-gray-600 text-sm leading-relaxed">
-                    Потому что для создания печати по оттиску для начала требуется нарисовать полную копию вашей печати, и делается вручную дизайнером.
+                    Для новой печати вы выбираете макет из нашей галереи макетов, для печати по оттиску  - нам потребуется нарисовать или воссоздать копию вашей печати.
                 </div>
             </div>
             <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
                 <button class="faq-toggle w-full text-left px-6 py-4 flex items-center justify-between font-semibold text-gray-800 hover:text-primary-700 transition">
-                    <span>Какие документы нужны для изготовления печатей?</span>
+                    <span>Как можно получить свой заказ?</span>
                     <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
                 </button>
                 <div class="faq-answer px-6 pb-4 text-gray-600 text-sm leading-relaxed">
-                    Для юридических лиц требуется оригинал или копия свидетельства о регистрации.
+                    Заказ можно забрать из нашего офиса самостоятельно, воспользоваться действующими на территории города Тюмени курьерскими службами либо заказать курьерскую доставку в нашей компании.
                 </div>
             </div>
             <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
                 <button class="faq-toggle w-full text-left px-6 py-4 flex items-center justify-between font-semibold text-gray-800 hover:text-primary-700 transition">
-                    <span>Как можно получить свой заказ в Тюмени?</span>
+                    <span>Для заказов из других городов</span>
                     <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
                 </button>
                 <div class="faq-answer px-6 pb-4 text-gray-600 text-sm leading-relaxed">
-                    В Тюмени свой заказ можно забрать в любой из наших точек выдачи. Либо заказать курьерскую доставку, стоимость доставки до двери — 500 рублей.
+                    При отправке заказов за пределы города Тюмени мы работаем с транспортной компанией "СДЭК".
                 </div>
             </div>
         </div>
@@ -244,7 +231,7 @@
             </div>
             <div class="relative">
                 <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Нужна печать?</h2>
-                <p class="text-blue-100 mb-8 max-w-lg mx-auto">Оставьте заявку и мы перезвоним вам в течение 10 минут для уточнения деталей заказа</p>
+                <p class="text-blue-100 mb-8 max-w-lg mx-auto">Оставьте заявку и мы свяжемся с вами в ближайшее время для уточнения деталей заказа</p>
                 <a href="{{ url_for('catalog_all') }}" class="inline-flex items-center gap-2 bg-white text-primary-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition shadow-xl">
                     <i class="fas fa-th-large"></i> Каталог
                 </a>

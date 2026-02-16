@@ -34,6 +34,11 @@
                 <div class="p-6">
                     <p class="text-xs text-primary-600 font-medium mb-1">{% if product.category.slug == 'ooo' %}Печать организации{% elif product.category.slug == 'ip' %}Печать ИП{% elif product.category.slug == 'medics' %}Печать врача{% else %}{{ product.category.name }}{% endif %}</p>
                     <h3 class="text-lg font-bold text-gray-800 mb-2">{{ product.name }}</h3>
+                    {% if product.price %}
+                    <div class="mb-2">
+                        <span class="text-xl font-bold text-primary-600">от {{ product.price }} руб.</span>
+                    </div>
+                    {% endif %}
                     <p class="text-gray-500 text-sm mb-4 leading-relaxed line-clamp-2">{{ product.description }}</p>
                     <a href="{{ url_for('order_product', product_id=product.id) }}" class="block text-center bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-semibold transition">
                         <i class="fas fa-paper-plane"></i> Заказать

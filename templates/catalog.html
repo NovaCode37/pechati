@@ -37,6 +37,12 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
                     <p class="text-gray-500 text-sm mb-4 leading-relaxed">{{ product.description }}</p>
 
+                    {% if product.price %}
+                    <div class="mb-4">
+                        <span class="text-2xl font-bold text-primary-600">от {{ product.price }} руб.</span>
+                    </div>
+                    {% endif %}
+
                     <a href="{{ url_for('order_product', product_id=product.id) }}" class="block text-center bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-semibold transition">
                         <i class="fas fa-paper-plane"></i> Заказать
                     </a>
