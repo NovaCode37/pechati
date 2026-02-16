@@ -6,7 +6,6 @@
 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
     <h2 class="text-xl font-bold text-gray-800">Управление заказами</h2>
 
-    <!-- Filter -->
     <div class="flex items-center gap-2">
         <a href="{{ url_for('admin_orders') }}" class="px-3 py-1.5 rounded-lg text-sm font-medium transition
             {% if not status_filter %}bg-primary-100 text-primary-700{% else %}text-gray-500 hover:bg-gray-100{% endif %}">
