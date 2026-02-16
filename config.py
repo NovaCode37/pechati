@@ -24,7 +24,6 @@ class Config:
     MAX_FIELD_ADDRESS = 1000
     MAX_PARAMS_JSON_LENGTH = 10000
 
-    # --- Database (PostgreSQL or MySQL) ---
     _db_url = os.getenv('DATABASE_URL', 'postgresql://pechati7:pechati7@localhost:5432/pechati7')
     if _db_url.startswith('postgres://'):
         _db_url = 'postgresql://' + _db_url[len('postgres://'):]
