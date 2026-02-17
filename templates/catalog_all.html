@@ -33,7 +33,31 @@
                 <div class="p-6">
                     <p class="text-xs text-primary-600 font-medium mb-1">{% if product.category.slug == 'ooo' %}Печать организации{% elif product.category.slug == 'ip' %}Печать ИП{% elif product.category.slug == 'medics' %}Печать врача{% else %}{{ product.category.name }}{% endif %}</p>
                     <h3 class="text-lg font-bold text-gray-800 mb-2">{{ product.name }}</h3>
-                    {% if product.price %}
+                    {% if product.category.slug == 'ooo' %}
+                    <div class="mb-2">
+                        <span class="text-xl font-bold text-primary-600">от 1550 руб.</span>
+                    </div>
+                    {% elif product.category.slug == 'ip' %}
+                    <div class="mb-2">
+                        <span class="text-xl font-bold text-primary-600">от 1550 руб.</span>
+                    </div>
+                    {% elif product.category.slug == 'medics' %}
+                    <div class="mb-2">
+                        <span class="text-xl font-bold text-primary-600">от 1550 руб.</span>
+                    </div>
+                    {% elif product.category.slug == 'imprint' %}
+                    <div class="mb-2">
+                        <span class="text-xl font-bold text-primary-600">от 1750 руб.</span>
+                    </div>
+                    {% elif product.category.slug == 'facsimile' %}
+                    <div class="mb-2">
+                        <span class="text-xl font-bold text-primary-600">от 1200 руб.</span>
+                    </div>
+                    {% elif product.category.slug == 'stamps' %}
+                    <div class="mb-2">
+                        <span class="text-xl font-bold text-primary-600">от 1000 руб.</span>
+                    </div>
+                    {% elif product.price %}
                     <div class="mb-2">
                         <span class="text-xl font-bold text-primary-600">от {{ product.price }} руб.</span>
                     </div>
