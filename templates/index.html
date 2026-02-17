@@ -97,56 +97,31 @@
 
 <section class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
-                    Изготовление<br>
-                    <span class="text-primary-600">печатей и штампов</span>
-                </h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Компания Печати7 специализируется на изготовлении печатей и штампов в Тюмени. Мы работаем с 2016 года за это время изготовили тысячи печатей для ораганизааций и индивидуальных предпренимателей.
-                    Мы изготавливаем любые виды печатей для организаций, индивидуальных предпринимателей, врачей.
-                </p>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    Для вновь созданных организаций и ИП мы изготовим новую печать. В случае утери/износа печати - мы восстановим вашу печать. В случае реорганизации/смены реквизитов - мы внесем изменения в вашу действующую печать и изготовим новую.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="{{ url_for('catalog_all') }}" class="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-700 transition">
-                        <i class="fas fa-th-large"></i> Каталог
-                    </a>
-                    <a href="{{ url_for('about') }}" class="inline-flex items-center gap-2 border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:border-primary-300 hover:text-primary-700 transition">
-                        Подробнее <i class="fas fa-arrow-right"></i>
-                    </a>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
+                        <i class="fas fa-check text-green-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2">Любые виды печатей</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            Печать организации, печать ИП, печать врача, печать по оттиску.<br>
+                            Для вновь созданных организаций и ИП мы изготовим новую печать. В случае утери/износа печати мы восстановим вашу печать. В случае реорганизации/смены реквизитов мы внесем изменения в вашу действующую печать и изготовим новую.
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
-                <div class="space-y-6">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
-                            <i class="fas fa-check text-green-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 mb-1">Любые виды печатей</h4>
-                            <p class="text-sm text-gray-500">Печать организации, печать ИП, печать врача, печать по оттиску.</p>
-                        </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center shrink-0">
+                        <i class="fas fa-stamp text-purple-600"></i>
                     </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
-                            <i class="fas fa-shield-halved text-blue-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 mb-1">Высокое качество</h4>
-                            <p class="text-sm text-gray-500">Оснастка для печатей и штампов, а также материалы для изготовления клише от известных и надежных брендов</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
-                            <i class="fas fa-clock-rotate-left text-amber-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 mb-1">Удобные способы заказа</h4>
-                            <p class="text-sm text-gray-500">Онлайн через сайт, по электронной почте, в мессенджерах, в офисе или по телефону</p>
-                        </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-2">Любые виды штампов</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            Адресные, рекламные, для регистрации документов, формирования справок, маркировки
+                        </p>
                     </div>
                 </div>
             </div>
