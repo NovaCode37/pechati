@@ -21,17 +21,17 @@
                 <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold {% if step >= 1 %}bg-primary-600 text-white{% else %}bg-gray-200 text-gray-500{% endif %}">1</span>
                 <span class="text-sm text-gray-500 hidden sm:inline">Параметры</span>
             </div>
-            {% if not skip_layout_osnastka %}
+            {% if not skip_layout_osnastka and not skip_layout %}
             <div class="w-12 h-0.5 bg-gray-200"></div>
             <div class="flex items-center gap-1">
                 <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold {% if step >= 2 %}bg-primary-600 text-white{% else %}bg-gray-200 text-gray-500{% endif %}">2</span>
                 <span class="text-sm text-gray-500 hidden sm:inline">Макет</span>
             </div>
-            <div class="w-12 h-0.5 bg-gray-200"></div>
             {% endif %}
+            <div class="w-12 h-0.5 bg-gray-200"></div>
             <div class="flex items-center gap-1">
-                <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold {% if step >= 3 %}bg-primary-600 text-white{% else %}bg-gray-200 text-gray-500{% endif %}">{{ 2 if skip_layout_osnastka else 3 }}</span>
-                <span class="text-sm text-gray-500 hidden sm:inline">{% if skip_layout_osnastka %}Контакты{% else %}Оснастка и контакты{% endif %}</span>
+                <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold {% if step >= 3 %}bg-primary-600 text-white{% else %}bg-gray-200 text-gray-500{% endif %}">{{ 2 if skip_layout_osnastka or skip_layout else 3 }}</span>
+                <span class="text-sm text-gray-500 hidden sm:inline">{% if skip_layout_osnastka %}Контакты{% elif skip_layout %}Оснастка и контакты{% else %}Оснастка и контакты{% endif %}</span>
             </div>
         </div>
 
@@ -155,14 +155,14 @@
             {% endif %}
 
             {% elif step == 3 %}
-            <h2 class="text-xl font-bold text-gray-800 mb-6">{% if skip_layout_osnastka %}Шаг 2: Контакты{% else %}Шаг 3: Оснастка и контакты{% endif %}</h2>
+            <h2 class="text-xl font-bold text-gray-800 mb-6">{% if skip_layout_osnastka %}Шаг 2: Контакты{% elif skip_layout %}Шаг 2: Оснастка и контакты{% else %}Шаг 3: Оснастка и контакты{% endif %}</h2>
             <form method="POST" enctype="multipart/form-data" class="space-y-6" id="orderProductForm">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="layout_id" value="{{ layout_id or (layouts[0].id if layouts else '') }}">
                 {% if skip_layout_osnastka and price_options %}<input type="hidden" name="price_option_id" value="{{ price_options[0].id }}">{% endif %}
 
                 {% if price_options and not skip_layout_osnastka %}
-                {% set layout_price = (selected_layout.price|default(750)) if selected_layout else 750 %}
+                {% set layout_price = 0 if skip_layout else ((selected_layout.price|default(750)) if selected_layout else 750) %}
                 <input type="hidden" id="layoutPrice" value="{{ layout_price|int }}">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-3">Выберите оснастку</label>

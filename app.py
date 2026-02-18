@@ -137,7 +137,8 @@ def order_product(product_id):
     max_addr = app.config['MAX_FIELD_ADDRESS']
     max_params_len = app.config['MAX_PARAMS_JSON_LENGTH']
 
-    skip_layout_osnastka = product.category.slug in ('faksimile', 'stamps', 'ottisk')
+    skip_layout_osnastka = product.category.slug in ('faksimile', 'ottisk')
+    skip_layout = not layouts
 
     if request.method == 'POST':
         if step == '1':
@@ -154,6 +155,9 @@ def order_product(product_id):
                 step_data = {'layout_id': str(layouts[0].id) if layouts else '', 'params': params, 'file_path': file_path}
                 session[session_key] = step_data
                 return redirect(url_for('order_product', product_id=product_id, step=3, layout_id=step_data.get('layout_id') or ''))
+            if not layouts:
+                session[session_key] = {'params': params, 'file_path': file_path}
+                return redirect(url_for('order_product', product_id=product_id, step=3))
             return redirect(url_for('order_product', product_id=product_id, step=2))
         elif step == '2':
             step_data = session.get(session_key, {})
@@ -192,7 +196,7 @@ def order_product(product_id):
 
             layout_obj = Layout.query.get(int(layout_id)) if layout_id and str(layout_id).isdigit() else None
             po = PriceOption.query.get(int(price_option_id)) if price_option_id and str(price_option_id).isdigit() else None
-            layout_price = 0 if skip_layout_osnastka else (layout_obj.price if layout_obj else 750)
+            layout_price = 0 if (skip_layout_osnastka or not layouts) else (layout_obj.price if layout_obj else 750)
             po_price = po.price_normal if po else 0
             needs_delivery = request.form.get('needs_delivery') == 'on'
             delivery_fee = 500 if needs_delivery else 0
@@ -253,6 +257,7 @@ def order_product(product_id):
                            price_options=price_options,
                            selected_layout=selected_layout,
                            layout_id=layout_id,
+                           skip_layout=not layouts,
                            skip_layout_osnastka=skip_layout_osnastka)
 
 
