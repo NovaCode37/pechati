@@ -286,6 +286,58 @@ def policy():
     return render_template('policy.html')
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return redirect(url_for('static', filename='favicon.ico'), code=301)
+
+
+@app.route('/robots.txt')
+def robots_txt():
+    sitemap_url = url_for('sitemap_xml', _external=True)
+    content = f"""User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /order/
+
+Sitemap: {sitemap_url}
+Host: {request.host}
+"""
+    return app.response_class(content, mimetype='text/plain')
+
+
+@app.route('/sitemap.xml')
+def sitemap_xml():
+    from datetime import date
+    today = date.today().isoformat()
+    base = request.url_root.rstrip('/')
+
+    urls = [
+        {'loc': base + '/', 'priority': '1.0', 'changefreq': 'weekly'},
+        {'loc': base + url_for('catalog_all'), 'priority': '0.9', 'changefreq': 'weekly'},
+        {'loc': base + url_for('about'), 'priority': '0.7', 'changefreq': 'monthly'},
+        {'loc': base + url_for('contacts'), 'priority': '0.7', 'changefreq': 'monthly'},
+        {'loc': base + url_for('delivery'), 'priority': '0.7', 'changefreq': 'monthly'},
+        {'loc': base + url_for('policy'), 'priority': '0.3', 'changefreq': 'yearly'},
+    ]
+
+    categories = Category.query.filter_by(is_active=True).all()
+    for cat in categories:
+        urls.append({'loc': base + url_for('catalog', slug=cat.slug), 'priority': '0.8', 'changefreq': 'weekly'})
+
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for u in urls:
+        xml += '  <url>\n'
+        xml += f'    <loc>{u["loc"]}</loc>\n'
+        xml += f'    <lastmod>{today}</lastmod>\n'
+        xml += f'    <changefreq>{u["changefreq"]}</changefreq>\n'
+        xml += f'    <priority>{u["priority"]}</priority>\n'
+        xml += '  </url>\n'
+    xml += '</urlset>'
+
+    return app.response_class(xml, mimetype='application/xml')
+
+
 @app.route('/admin/login', methods=['GET', 'POST'])
 @rate_limit('admin_login', 5)
 def admin_login():
