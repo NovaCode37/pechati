@@ -1,7 +1,7 @@
 import os
 import json as _json
 from datetime import datetime
-from flask import Flask, render_template, redirect, url_for, flash, request, session, abort
+from flask import Flask, render_template, redirect, url_for, flash, request, session, abort, send_from_directory
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf.csrf import CSRFProtect
 
@@ -288,7 +288,7 @@ def policy():
 
 @app.route('/favicon.ico')
 def favicon():
-    return redirect(url_for('static', filename='favicon.ico'), code=301)
+    return send_from_directory(app.static_folder, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/robots.txt')
