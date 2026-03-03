@@ -198,9 +198,10 @@ def order_product(product_id):
             po = PriceOption.query.get(int(price_option_id)) if price_option_id and str(price_option_id).isdigit() else None
             layout_price = 0 if (skip_layout_osnastka or not layouts) else (layout_obj.price if layout_obj else 750)
             po_price = po.price_normal if po else 0
+            qty = max(1, int(step_data.get('params', {}).get('qty', 1) or 1))
             needs_delivery = request.form.get('needs_delivery') == 'on'
             delivery_fee = 500 if needs_delivery else 0
-            total = layout_price + po_price + delivery_fee
+            total = (layout_price + po_price) * qty + delivery_fee
 
             file_path = step_data.get('file_path', '')
             file_path_step3 = safe_save_upload(
@@ -250,6 +251,9 @@ def order_product(product_id):
     layout_id = request.args.get('layout_id')
     selected_layout = Layout.query.get(layout_id) if layout_id else (layouts[0] if layouts else None)
 
+    session_data = session.get(session_key, {})
+    qty = max(1, int(session_data.get('params', {}).get('qty', 1) or 1))
+
     return render_template('order_product.html',
                            product=product,
                            step=int(step) if step.isdigit() else 1,
@@ -257,6 +261,7 @@ def order_product(product_id):
                            price_options=price_options,
                            selected_layout=selected_layout,
                            layout_id=layout_id,
+                           qty=qty,
                            skip_layout=not layouts,
                            skip_layout_osnastka=skip_layout_osnastka)
 

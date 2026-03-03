@@ -187,17 +187,19 @@
                     </div>
                 </div>
 
+                <input type="hidden" id="orderQty" value="{{ qty|default(1) }}">
                 {% if product.category.slug not in ['faksimile', 'ottisk'] %}
                 <div class="border-t border-gray-100 pt-6">
-                    <p class="text-lg font-bold text-gray-800 mb-4">Итого: <span id="totalPrice">{{ (layout_price|default(0)|int) + (price_options[0].price_normal|int if price_options else 0) }}</span> руб.</p>
+                    <p class="text-lg font-bold text-gray-800 mb-4">Итого: <span id="totalPrice">{{ ((layout_price|default(0)|int) + (price_options[0].price_normal|int if price_options else 0)) * (qty|default(1)) }}</span> руб.{% if qty|default(1) > 1 %} <span class="text-sm font-normal text-gray-500">({{ qty }} шт.)</span>{% endif %}</p>
                 </div>
                 {% endif %}
                 {% elif price_options and skip_layout_osnastka %}
                 <input type="hidden" id="layoutPrice" value="0">
                 <input type="hidden" id="basePrice" value="{{ price_options[0].price_normal|int }}">
+                <input type="hidden" id="orderQty" value="{{ qty|default(1) }}">
                 {% if product.category.slug not in ['faksimile', 'ottisk'] %}
                 <div class="border-t border-gray-100 pt-6">
-                    <p class="text-lg font-bold text-gray-800 mb-4">Итого: <span id="totalPrice">{{ price_options[0].price_normal|int }}</span> руб.</p>
+                    <p class="text-lg font-bold text-gray-800 mb-4">Итого: <span id="totalPrice">{{ (price_options[0].price_normal|int) * (qty|default(1)) }}</span> руб.{% if qty|default(1) > 1 %} <span class="text-sm font-normal text-gray-500">({{ qty }} шт.)</span>{% endif %}</p>
                 </div>
                 {% endif %}
                 {% endif %}
@@ -266,8 +268,10 @@
 (function() {
     const layoutPriceEl = document.getElementById('layoutPrice');
     const basePriceEl = document.getElementById('basePrice');
+    const qtyEl = document.getElementById('orderQty');
     const layoutPrice = parseInt(layoutPriceEl?.value || 0, 10) || 0;
     const basePrice = basePriceEl ? parseInt(basePriceEl.value, 10) || 0 : 0;
+    const qty = Math.max(1, parseInt(qtyEl?.value || 1, 10) || 1);
     const DELIVERY_FEE = 500;
 
     function updateTotal() {
@@ -275,7 +279,7 @@
         const osnastkaPrice = osnastkaRadio ? parseFloat(osnastkaRadio.dataset.price) || 0 : basePrice;
         const deliveryChecked = document.getElementById('needs_delivery')?.checked || false;
         const deliveryFee = deliveryChecked ? DELIVERY_FEE : 0;
-        const total = Math.round(layoutPrice + osnastkaPrice + deliveryFee);
+        const total = Math.round((layoutPrice + osnastkaPrice) * qty + deliveryFee);
         const el = document.getElementById('totalPrice');
         if (el) el.textContent = total;
     }
