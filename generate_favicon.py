@@ -3,7 +3,7 @@ import os
 
 
 size = 32
-img = Image.new('RGBA', (size, size), (37, 99, 235, 255))  # primary-600 цвет
+img = Image.new('RGBA', (size, size), (37, 99, 235, 255))  
 draw = ImageDraw.Draw(img)
 
 try:
