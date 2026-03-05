@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -6,9 +6,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from app import app, db
 from models import Product
 
-# Цены для товаров
 prices = {
-    # Печати
     'Печать организации': 1550,
     'Печать ИП': 1550,
     'Печать врача': 1200,
