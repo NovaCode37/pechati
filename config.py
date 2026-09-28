@@ -1,15 +1,30 @@
 import os
+import secrets
+import warnings
 from dotenv import load_dotenv
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(BASE_DIR, '.env'), encoding='utf-8')
 
 
-class Config:
-    _default_secret = 'pechati5-secret-key-change-me'
-    SECRET_KEY = os.getenv('SECRET_KEY', _default_secret)
+def _resolve_secret_key(debug):
+    key = os.getenv('SECRET_KEY', '').strip()
+    if key:
+        return key
+    if debug:
+        return 'pechati5-dev-secret-not-for-production'
+    warnings.warn(
+        'SECRET_KEY not set — using an ephemeral random key. Sessions reset on '
+        'every restart. Set SECRET_KEY in the environment.',
+        RuntimeWarning,
+        stacklevel=2,
+    )
+    return secrets.token_urlsafe(48)
 
+
+class Config:
     DEBUG = os.getenv('FLASK_DEBUG', 'false').lower() in ('1', 'true', 'yes')
+    SECRET_KEY = _resolve_secret_key(DEBUG)
 
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
